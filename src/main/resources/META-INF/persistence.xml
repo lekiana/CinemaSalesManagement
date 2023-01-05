@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd"
+             version="2.2">
+    <persistence-unit name="default">
+
+        <class>entity.CinemaEntity</class>
+        <class>entity.ClientEntity</class>
+        <class>entity.EmployeeEntity</class>
+        <class>entity.EmployeeTelephoneNrEntity</class>
+        <class>entity.MovieEntity</class>
+        <class>entity.PaymentEntity</class>
+        <class>entity.PositionEntity</class>
+        <class>entity.ReservationEntity</class>
+        <class>entity.RoomEntity</class>
+        <class>entity.SeanceEntity</class>
+        <class>entity.SeatEntity</class>
+        <class>entity.TelephoneNrEntity</class>
+        <properties>
+            <property name="hibernate.connection.url" value="jdbc:postgresql://localhost:5432/kino 2"/>
+            <property name="hibernate.connection.driver_class" value="org.postgresql.Driver"/>
+            <property name="hibernate.connection.username" value="postgres"/>
+            <property name="hibernate.connection.password" value="admin"/>
+            <property name="hibernate.show_sql" value="true"/>
+
+        </properties>
+    </persistence-unit>
+</persistence>
