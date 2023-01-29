@@ -1,19 +1,32 @@
-import javax.persistence.EntityManager;
-import javax.persistence.Query;
+import javax.persistence.*;
 import java.util.Arrays;
+import java.util.List;
 
 public class queries {
 
-    public static void browseSeances(EntityManager entityManager){
+    public static void browseSeances(EntityManager entityManager, int seanceId){
         Query browseSeances = entityManager.createNativeQuery("SELECT * FROM seat WHERE seanceid=:seanceId");
-        browseSeances.setParameter("seanceId", 50);
+        browseSeances.setParameter("seanceId", seanceId);
         System.out.println(Arrays.deepToString(browseSeances.getResultList().toArray()));
     }
 
-    public static void findSeance(EntityManager entityManager){
+    public static String findSeance(EntityManager entityManager, String day){
         Query findSeance = entityManager.createNativeQuery("SELECT * FROM seance WHERE \"Date\"=TO_DATE(:day, 'yyyy/mm/dd')");
-        findSeance.setParameter("day", "2023/02/01");
-        System.out.println(Arrays.deepToString(findSeance.getResultList().toArray()));
+        findSeance.setParameter("day", day);
+        Object[] seances = findSeance.getResultList().toArray();
+        String seancesStr = Arrays.deepToString(seances);
+        String seanceSt = seancesStr.replace("[", "");
+        String seanceS = seanceSt.replace("]]", "");
+        String seance = seanceS.replace(" ", "");
+
+        return seance;
+    }
+
+    public static String findMovie(EntityManager entityManager, int movieId){
+        Query browseSeances = entityManager.createNativeQuery("SELECT title FROM movie WHERE id=:movieId");
+        browseSeances.setParameter("movieId", movieId);
+        //System.out.println(Arrays.deepToString(browseSeances.getResultList().toArray()));
+        return browseSeances.getSingleResult().toString();
     }
 
     public static void deleteReservation(EntityManager entityManager){
@@ -56,5 +69,43 @@ public class queries {
         changePrice.setParameter("price", 26);
         changePrice.setParameter("id", 2);
         changePrice.executeUpdate();
+    }
+
+    public static String findSeances(String day) {
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("default");
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
+
+        try {
+            transaction.begin();
+            String sean = queries.findSeance(entityManager, day);
+            transaction.commit();
+            return sean;
+        } finally {
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
+            entityManager.close();
+            entityManagerFactory.close();
+        }
+    }
+
+    public static String findMovies(int id) {
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("default");
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
+
+        try {
+            transaction.begin();
+            String sean = queries.findMovie(entityManager, id);
+            transaction.commit();
+            return sean;
+        } finally {
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
+            entityManager.close();
+            entityManagerFactory.close();
+        }
     }
 }
