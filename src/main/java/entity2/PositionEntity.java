@@ -1,15 +1,18 @@
-package entity;
+package entity2;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "position", schema = "public", catalog = "kino 2")
+@Table(name = "position", schema = "public", catalog = "Kino2")
 public class PositionEntity {
-    private int id;
-    private String name;
-
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id")
+    private int id;
+    @Basic
+    @Column(name = "name")
+    private String name;
+
     public int getId() {
         return id;
     }
@@ -18,8 +21,6 @@ public class PositionEntity {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "name")
     public String getName() {
         return name;
     }
@@ -46,5 +47,13 @@ public class PositionEntity {
         int result = id;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "PositionEntity{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
     }
 }

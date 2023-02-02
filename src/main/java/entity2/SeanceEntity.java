@@ -1,21 +1,32 @@
-package entity;
+package entity2;
 
 import javax.persistence.*;
 import java.sql.Date;
 import java.sql.Time;
 
 @Entity
-@Table(name = "seance", schema = "public", catalog = "kino 2")
+@Table(name = "seance", schema = "public", catalog = "Kino2")
 public class SeanceEntity {
-    private int id;
-    private int movieid;
-    private int roomid;
-    private Time time;
-    private int price;
-    private Date date;
-
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id")
+    private int id;
+    @Basic
+    @Column(name = "movieid")
+    private int movieid;
+    @Basic
+    @Column(name = "roomid")
+    private int roomid;
+    @Basic
+    @Column(name = "time")
+    private Time time;
+    @Basic
+    @Column(name = "price")
+    private int price;
+    @Basic
+    @Column(name = "Date")
+    private Date date;
+
     public int getId() {
         return id;
     }
@@ -24,8 +35,6 @@ public class SeanceEntity {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "movieid")
     public int getMovieid() {
         return movieid;
     }
@@ -34,8 +43,6 @@ public class SeanceEntity {
         this.movieid = movieid;
     }
 
-    @Basic
-    @Column(name = "roomid")
     public int getRoomid() {
         return roomid;
     }
@@ -44,8 +51,6 @@ public class SeanceEntity {
         this.roomid = roomid;
     }
 
-    @Basic
-    @Column(name = "time")
     public Time getTime() {
         return time;
     }
@@ -54,8 +59,6 @@ public class SeanceEntity {
         this.time = time;
     }
 
-    @Basic
-    @Column(name = "price")
     public int getPrice() {
         return price;
     }
@@ -64,8 +67,6 @@ public class SeanceEntity {
         this.price = price;
     }
 
-    @Basic
-    @Column(name = "Date")
     public Date getDate() {
         return date;
     }
@@ -100,5 +101,17 @@ public class SeanceEntity {
         result = 31 * result + price;
         result = 31 * result + (date != null ? date.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "SeanceEntity{" +
+                "id=" + id +
+                ", movieid=" + movieid +
+                ", roomid=" + roomid +
+                ", time=" + time +
+                ", price=" + price +
+                ", date=" + date +
+                '}';
     }
 }

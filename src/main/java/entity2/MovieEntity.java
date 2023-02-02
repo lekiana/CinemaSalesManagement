@@ -1,19 +1,30 @@
-package entity;
+package entity2;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "movie", schema = "public", catalog = "kino 2")
+@Table(name = "movie", schema = "public", catalog = "Kino2")
 public class MovieEntity {
-    private int id;
-    private String category;
-    private String title;
-    private String director;
-    private String description;
-    private int length;
-
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id")
+    private int id;
+    @Basic
+    @Column(name = "category")
+    private String category;
+    @Basic
+    @Column(name = "title")
+    private String title;
+    @Basic
+    @Column(name = "director")
+    private String director;
+    @Basic
+    @Column(name = "description")
+    private String description;
+    @Basic
+    @Column(name = "length")
+    private int length;
+
     public int getId() {
         return id;
     }
@@ -22,8 +33,6 @@ public class MovieEntity {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "category")
     public String getCategory() {
         return category;
     }
@@ -32,8 +41,6 @@ public class MovieEntity {
         this.category = category;
     }
 
-    @Basic
-    @Column(name = "title")
     public String getTitle() {
         return title;
     }
@@ -42,8 +49,6 @@ public class MovieEntity {
         this.title = title;
     }
 
-    @Basic
-    @Column(name = "director")
     public String getDirector() {
         return director;
     }
@@ -52,8 +57,6 @@ public class MovieEntity {
         this.director = director;
     }
 
-    @Basic
-    @Column(name = "description")
     public String getDescription() {
         return description;
     }
@@ -62,8 +65,6 @@ public class MovieEntity {
         this.description = description;
     }
 
-    @Basic
-    @Column(name = "length")
     public int getLength() {
         return length;
     }
@@ -98,5 +99,17 @@ public class MovieEntity {
         result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + length;
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "MovieEntity{" +
+                "id=" + id +
+                ", category='" + category + '\'' +
+                ", title='" + title + '\'' +
+                ", director='" + director + '\'' +
+                ", description='" + description + '\'' +
+                ", length=" + length +
+                '}';
     }
 }

@@ -1,20 +1,29 @@
-package entity;
+package entity2;
 
 import javax.persistence.*;
 import java.sql.Date;
 import java.sql.Time;
 
 @Entity
-@Table(name = "reservation", schema = "public", catalog = "kino 2")
+@Table(name = "reservation", schema = "public", catalog = "Kino2")
 public class ReservationEntity {
-    private int id;
-    private Integer clientid;
-    private int seatid;
-    private Date date;
-    private Time time;
-
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id")
+    private int id;
+    @Basic
+    @Column(name = "clientid")
+    private Integer clientid;
+    @Basic
+    @Column(name = "seatid")
+    private int seatid;
+    @Basic
+    @Column(name = "Date")
+    private Date date;
+    @Basic
+    @Column(name = "time")
+    private Time time;
+
     public int getId() {
         return id;
     }
@@ -23,8 +32,6 @@ public class ReservationEntity {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "clientid")
     public Integer getClientid() {
         return clientid;
     }
@@ -33,8 +40,6 @@ public class ReservationEntity {
         this.clientid = clientid;
     }
 
-    @Basic
-    @Column(name = "seatid")
     public int getSeatid() {
         return seatid;
     }
@@ -43,8 +48,6 @@ public class ReservationEntity {
         this.seatid = seatid;
     }
 
-    @Basic
-    @Column(name = "Date")
     public Date getDate() {
         return date;
     }
@@ -53,8 +56,6 @@ public class ReservationEntity {
         this.date = date;
     }
 
-    @Basic
-    @Column(name = "time")
     public Time getTime() {
         return time;
     }
@@ -87,5 +88,16 @@ public class ReservationEntity {
         result = 31 * result + (date != null ? date.hashCode() : 0);
         result = 31 * result + (time != null ? time.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "ReservationEntity{" +
+                "id=" + id +
+                ", clientid=" + clientid +
+                ", seatid=" + seatid +
+                ", date=" + date +
+                ", time=" + time +
+                '}';
     }
 }

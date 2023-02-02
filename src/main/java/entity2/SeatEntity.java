@@ -1,18 +1,27 @@
-package entity;
+package entity2;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "seat", schema = "public", catalog = "kino 2")
+@Table(name = "seat", schema = "public", catalog = "Kino2")
 public class SeatEntity {
-    private int id;
-    private int seanceid;
-    private int isavailable;
-    private int row;
-    private int nr;
-
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id")
+    private int id;
+    @Basic
+    @Column(name = "seanceid")
+    private int seanceid;
+    @Basic
+    @Column(name = "isavailable")
+    private int isavailable;
+    @Basic
+    @Column(name = "row")
+    private int row;
+    @Basic
+    @Column(name = "nr")
+    private int nr;
+
     public int getId() {
         return id;
     }
@@ -21,8 +30,6 @@ public class SeatEntity {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "seanceid")
     public int getSeanceid() {
         return seanceid;
     }
@@ -31,8 +38,6 @@ public class SeatEntity {
         this.seanceid = seanceid;
     }
 
-    @Basic
-    @Column(name = "isavailable")
     public int getIsavailable() {
         return isavailable;
     }
@@ -41,8 +46,6 @@ public class SeatEntity {
         this.isavailable = isavailable;
     }
 
-    @Basic
-    @Column(name = "row")
     public int getRow() {
         return row;
     }
@@ -51,8 +54,6 @@ public class SeatEntity {
         this.row = row;
     }
 
-    @Basic
-    @Column(name = "nr")
     public int getNr() {
         return nr;
     }
@@ -85,5 +86,16 @@ public class SeatEntity {
         result = 31 * result + row;
         result = 31 * result + nr;
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "SeatEntity{" +
+                "id=" + id +
+                ", seanceid=" + seanceid +
+                ", isavailable=" + isavailable +
+                ", row=" + row +
+                ", nr=" + nr +
+                '}';
     }
 }

@@ -1,18 +1,27 @@
-package entity;
+package entity2;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "payment", schema = "public", catalog = "kino 2")
+@Table(name = "payment", schema = "public", catalog = "Kino2")
 public class PaymentEntity {
-    private int id;
-    private int reservationid;
-    private Integer employeeid;
-    private int amount;
-    private int ispaid;
-
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id")
+    private int id;
+    @Basic
+    @Column(name = "reservationid")
+    private int reservationid;
+    @Basic
+    @Column(name = "employeeid")
+    private Integer employeeid;
+    @Basic
+    @Column(name = "amount")
+    private int amount;
+    @Basic
+    @Column(name = "ispaid")
+    private int ispaid;
+
     public int getId() {
         return id;
     }
@@ -21,8 +30,6 @@ public class PaymentEntity {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "reservationid")
     public int getReservationid() {
         return reservationid;
     }
@@ -31,8 +38,6 @@ public class PaymentEntity {
         this.reservationid = reservationid;
     }
 
-    @Basic
-    @Column(name = "employeeid")
     public Integer getEmployeeid() {
         return employeeid;
     }
@@ -41,8 +46,6 @@ public class PaymentEntity {
         this.employeeid = employeeid;
     }
 
-    @Basic
-    @Column(name = "amount")
     public int getAmount() {
         return amount;
     }
@@ -51,8 +54,6 @@ public class PaymentEntity {
         this.amount = amount;
     }
 
-    @Basic
-    @Column(name = "ispaid")
     public int getIspaid() {
         return ispaid;
     }
@@ -85,5 +86,16 @@ public class PaymentEntity {
         result = 31 * result + amount;
         result = 31 * result + ispaid;
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "PaymentEntity{" +
+                "id=" + id +
+                ", reservationid=" + reservationid +
+                ", employeeid=" + employeeid +
+                ", amount=" + amount +
+                ", ispaid=" + ispaid +
+                '}';
     }
 }

@@ -4,10 +4,28 @@ import java.util.List;
 
 public class queries {
 
-    public static void browseSeances(EntityManager entityManager, int seanceId){
-        Query browseSeances = entityManager.createNativeQuery("SELECT * FROM seat WHERE seanceid=:seanceId");
-        browseSeances.setParameter("seanceId", seanceId);
-        System.out.println(Arrays.deepToString(browseSeances.getResultList().toArray()));
+    public static String findRoom(EntityManager entityManager, int seanceId){
+        Query findRoom = entityManager.createNativeQuery("SELECT * FROM room WHERE id=:seanceId");
+        findRoom.setParameter("seanceId", seanceId);
+        Object[] rooms = findRoom.getResultList().toArray();
+        String roomsStr = Arrays.deepToString(rooms);
+        String roomSt = roomsStr.replace("[", "");
+        String roomS = roomSt.replace("]]", "");
+        String room = roomS.replace(" ", "");
+
+        return room;
+    }
+
+    public static String findSeats(EntityManager entityManager, int seanceId){
+        Query findSeats = entityManager.createNativeQuery("SELECT * FROM seat WHERE seanceid=:seanceId AND isAvailable=1");
+        findSeats.setParameter("seanceId", seanceId);
+        Object[] seats = findSeats.getResultList().toArray();
+        String seatsStr = Arrays.deepToString(seats);
+        String seatSt = seatsStr.replace("[", "");
+        String seatS = seatSt.replace("]]", "");
+        String seat = seatS.replace(" ", "");
+
+        return seat;
     }
 
     public static String findSeance(EntityManager entityManager, String day){
@@ -25,7 +43,6 @@ public class queries {
     public static String findMovie(EntityManager entityManager, int movieId){
         Query browseSeances = entityManager.createNativeQuery("SELECT title FROM movie WHERE id=:movieId");
         browseSeances.setParameter("movieId", movieId);
-        //System.out.println(Arrays.deepToString(browseSeances.getResultList().toArray()));
         return browseSeances.getSingleResult().toString();
     }
 
@@ -35,10 +52,10 @@ public class queries {
         deleteReservation.executeUpdate();
     }
 
-    public static void addReservation(EntityManager entityManager){
+    public static void addReservation(EntityManager entityManager, int seatId){
         Query addReservation = entityManager.createNativeQuery("INSERT INTO reservation(clientid, seatid, \"Date\", time) VALUES (:clientId, :seatId, CURRENT_DATE, CURRENT_TIME)");
         addReservation.setParameter("clientId", 1);
-        addReservation.setParameter("seatId", 221);
+        addReservation.setParameter("seatId", seatId);
         addReservation.executeUpdate();
     }
 
@@ -108,4 +125,43 @@ public class queries {
             entityManagerFactory.close();
         }
     }
+
+    public static String findRoom(int seanceId) {
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("default");
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
+
+        try {
+            transaction.begin();
+            String sean = queries.findRoom(entityManager, seanceId);
+            transaction.commit();
+            return sean;
+        } finally {
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
+            entityManager.close();
+            entityManagerFactory.close();
+        }
+    }
+
+    public static String findSeats(int seanceId) {
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("default");
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
+
+        try {
+            transaction.begin();
+            String sean = queries.findSeats(entityManager, seanceId);
+            transaction.commit();
+            return sean;
+        } finally {
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
+            entityManager.close();
+            entityManagerFactory.close();
+        }
+    }
+
 }

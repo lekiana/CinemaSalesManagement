@@ -1,15 +1,21 @@
-package entity;
+package entity2;
 
 import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.io.Serializable;
 
 public class EmployeeTelephoneNrEntityPK implements Serializable {
-    private int employeeid;
-    private int telephoneNrid;
-
     @Column(name = "employeeid")
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int employeeid;
+    @Column(name = "telephone_nrid")
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int telephoneNrid;
+
     public int getEmployeeid() {
         return employeeid;
     }
@@ -18,8 +24,6 @@ public class EmployeeTelephoneNrEntityPK implements Serializable {
         this.employeeid = employeeid;
     }
 
-    @Column(name = "telephone_nrid")
-    @Id
     public int getTelephoneNrid() {
         return telephoneNrid;
     }
@@ -46,5 +50,13 @@ public class EmployeeTelephoneNrEntityPK implements Serializable {
         int result = employeeid;
         result = 31 * result + telephoneNrid;
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "EmployeeTelephoneNrEntityPK{" +
+                "employeeid=" + employeeid +
+                ", telephoneNrid=" + telephoneNrid +
+                '}';
     }
 }
